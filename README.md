@@ -48,4 +48,41 @@ docker --version
 docker buildx version
 ```
 
-Let me know if you need further assistance! 🚀
+
+
+
+saddamnvn@DESKTOP-PTTGD06:~$ docker ps -a
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.49/containers/json?all=1": dial unix /var/run/docker.sock: connect: permission denied
+
+```
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock
+```
+
+means your current user (`saddamnvn`) doesn't have permission to access the Docker daemon.
+
+---
+
+### ✅ Fix: Add your user to the `docker` group
+
+Run the following command:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Then **log out and log back in** (or reboot) to apply the group changes.
+
+> 💡 Alternatively, you can run `newgrp docker` in the same session to apply it immediately without rebooting.
+
+---
+
+### 🔁 Then try again:
+```bash
+docker info
+```
+
+It should now show the full Docker server info without any permission errors.
+
+---
+
+Let me know if you're planning to use this with **VS Code Remote - SSH** or directly from Linux VS Code, and I’ll help configure that next.
